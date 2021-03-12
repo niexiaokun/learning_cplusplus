@@ -66,7 +66,7 @@ public:
         cout << "~Mat() " << *this->count << endl;
         if (*this->count)
             --(*this->count);
-        if (*this->count == 0)
+        if (*this->count == 0 && data)
             delete[] data;
     }
 
