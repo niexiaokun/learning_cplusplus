@@ -2,10 +2,10 @@
 
 using namespace std;
 
-
+template <typename T>
 class Mat {
 public:
-    int *data;
+    T *data;
     int rows, cols;
     int *count;
 public:
@@ -14,19 +14,19 @@ public:
     }
 
     Mat(int m, int n) : rows(m), cols(n) {
-        data = new int[m * n];
+        data = new T[m * n];
         for (int i = 0; i < m * n; ++i)
             data[i] = 0;
         count = new int(1);
     }
 
-    Mat(const vector<vector<int>> &v) {
+    Mat(const vector<vector<T>> &v) {
         rows = v.size();
-        if (rows == 0)
-            cols = 0;
-        else
-            cols = v[0].size();
-        data = new int[rows * cols];
+        assert(rows);
+        cols = v[0].size();
+        for(int i = 1; i < rows; ++i)
+            assert(v[i].size() == cols);
+        data = new T[rows * cols];
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j)
                 data[i * cols + j] = v[i][j];
@@ -44,6 +44,40 @@ public:
             this->count = other.count;
             ++(*this->count);
         }
+    }
+
+    Mat operator*(const Mat &other){
+        assert(cols == other.rows);
+        int m = rows, n = cols, k = other.cols;
+        Mat<T> res(m, k);
+        for(int i = 0; i < m; ++i){
+            for(int j = 0; j < k; ++j){
+                for(int x = 0; x < n; ++x)
+                    res.data[i*k+j] += data[i*n+x] * other.data[x*k+j];
+            }
+        }
+        return res;
+    }
+
+    Mat operator+(const Mat &other){
+        assert(rows == other.rows && cols == other.cols);
+        Mat res(rows, cols);
+        for(int i = 0; i < rows; ++i){
+            for(int j = 0; j < cols; ++j){
+                res.data[i*cols+j] = data[i*cols+j] + other.data[i*cols+j];
+            }
+        }
+        return res;
+    }
+
+    Mat operator-(const Mat &other){
+        assert(rows == other.rows && cols == other.cols);
+        Mat res(rows, cols);
+        for(int i = 0; i < rows; ++i){
+            for(int j = 0; j < cols; ++j)
+                res.data[i*cols+j] = data[i*cols+j] - other.data[i+cols+j];
+        }
+        return res;
     }
 
     Mat &operator=(const Mat &other) {
@@ -86,12 +120,12 @@ public:
 
 int main(int argc, char* argv[]) {
 
-    vector<vector<int>> v = {{1,  2,  3,  4},
+    vector<vector<double>> v = {{1,  2,  3,  4},
                              {5,  6,  7,  8},
                              {9,  10, 11, 12},
                              {13, 14, 15, 16}};
     Mat a(v);
-    Mat b(4, 5);
+    Mat<double> b(4, 5);
     Mat c = a;
     c = b;
 
@@ -102,6 +136,12 @@ int main(int argc, char* argv[]) {
     cout << a ;
 
     cout << a.at(2, 3) << endl;
+
+    Mat d = a * a;
+    cout << d;
+
+    d = a + a;
+    cout << d;
 
     return 0;
 }

@@ -7,6 +7,8 @@ add_executable(list_support_multiTypes list_support_multiTypes.cpp)
 add_executable(singleton singleton.cpp)
 add_executable(smartPtr smartPtr.cpp)
 add_executable(mat mat.cpp)
-
+add_executable(ringBuffer ringBuffer.cpp)
+add_executable(Queue Queue.cpp)
 
 target_link_libraries(singleton pthread)
+target_link_libraries(ringBuffer pthread)
