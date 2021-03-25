@@ -9,6 +9,10 @@ add_executable(smartPtr smartPtr.cpp)
 add_executable(mat mat.cpp)
 add_executable(ringBuffer ringBuffer.cpp)
 add_executable(Queue Queue.cpp)
+add_executable(pointer pointer.cpp)
+
+add_executable(main main.cpp)
+target_link_libraries(main pthread)
 
 target_link_libraries(singleton pthread)
 target_link_libraries(ringBuffer pthread)
