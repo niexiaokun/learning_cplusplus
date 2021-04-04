@@ -143,5 +143,7 @@ int main(int argc, char* argv[]) {
     d = a + a;
     cout << d;
 
+    cout << a + a << endl;
+
     return 0;
 }

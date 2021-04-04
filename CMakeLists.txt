@@ -5,14 +5,19 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(list_support_multiTypes list_support_multiTypes.cpp)
 add_executable(singleton singleton.cpp)
+add_executable(observer observer.cpp)
 add_executable(smartPtr smartPtr.cpp)
 add_executable(mat mat.cpp)
+add_executable(matrix matrix.cpp)
 add_executable(ringBuffer ringBuffer.cpp)
 add_executable(Queue Queue.cpp)
 add_executable(pointer pointer.cpp)
 
 add_executable(main main.cpp)
 target_link_libraries(main pthread)
+
+add_executable(threadpool threadpool.cpp)
+target_link_libraries(threadpool pthread)
 
 target_link_libraries(singleton pthread)
 target_link_libraries(ringBuffer pthread)

@@ -54,12 +54,12 @@ public:
         return *this;
     }
 
-    T &operator*() {
+    T &operator*() const {
         assert(this->_ptr != nullptr);
         return *(this->_ptr);
     }
 
-    T *operator->() {
+    T *operator->() const {
         assert(this->_ptr != nullptr);
         return this->_ptr;
     }
